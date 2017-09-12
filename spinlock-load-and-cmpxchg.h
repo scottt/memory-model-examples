@@ -1,7 +1,7 @@
 #ifndef SPINLOCK_H
 #define SPINLOCK_H
 
-static void spin_lock(int *lock)
+void spin_lock(int *lock)
 {
 	int expected, t;
 
@@ -17,7 +17,7 @@ static void spin_lock(int *lock)
 	}
 }
 
-static void spin_unlock(int *lock)
+void spin_unlock(int *lock)
 {
 	int t = 0;
 	__atomic_store(lock, &t, __ATOMIC_RELEASE);
