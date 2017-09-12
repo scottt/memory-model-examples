@@ -3,11 +3,10 @@
 spin_lock:
 	ldaxr w5, [x0]     /* read lock */
 	mov w1, #1
-	cmp w5, #0         /* check if 0 */
-	bne spin_lock
+	cbnz w5, spin_lock /* check if 0 */
 	stxr w5, w1, [x0]  /* attempt to store new value */
-	cmp w5, #0         /* test if store suceeded */
-	bne spin_lock      /* retry if not */
+	cbnz w5, spin_lock /* test if store suceeded
+	                      retry if not */
 	/* loads and stores in the critical region can now be performed */
 	ret
 
