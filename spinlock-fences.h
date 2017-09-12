@@ -18,7 +18,8 @@ void spin_lock(int *lock)
 void spin_unlock(int *lock)
 {
 	int t = 0;
-	__atomic_thread_fence(__ATOMIC_RELEASE);
+	__atomic_thread_fence(__ATOMIC_RELEASE); /* ensure all previous accesses are observed
+						    before lock is cleard */
 	__atomic_store(lock, &t, __ATOMIC_RELAXED);
 }
 
