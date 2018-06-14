@@ -1,3 +1,10 @@
+/* Demonstrate Store-Load reodering:
+ *
+ * int x = 0, y = 0;
+ * {{ x = 1; r0 = y; || y = 1; r1 == x; }}
+ * assert(r0 != 0 || r1 != 0);
+ */
+
 #include <assert.h>
 #include <stdio.h>
 #include <pthread.h>
@@ -96,7 +103,7 @@ int main(int argc, char **argv)
 		r = pthread_join(thread0, &t0_ret);
 		assert(r == 0);
 
-		pthread_join(thread1, &t1_ret);
+		r = pthread_join(thread1, &t1_ret);
 		assert(r == 0);
 
 		if (t0_ret && t1_ret)
